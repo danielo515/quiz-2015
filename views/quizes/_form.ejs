@@ -13,3 +13,10 @@
 <input type="text" id="resp" name="quiz[respuesta]" placeholder="Respuesta" value="<%= quiz.respuesta %>"/> <p>
 <a href="/quizes"><button type="button">Cancelar</button></a>
 <input type="submit" value="Salvar">
+
+
+<script type="text/javascript">
+    var tema="<%= quiz.tema %>";
+    tema= tema === "undefined" ? "otro" : tema;
+    document.getElementById("topic").value = tema.toLowerCase();
+</script>
