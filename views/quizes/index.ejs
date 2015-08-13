@@ -28,6 +28,7 @@
   <% } %>
 </table>
 <p>
+<!-- make sure we have a session object -->
 <%if(locals.session && locals.session.user){%>
   <a href="/quizes/new"><button>Crear pregunta</button></a>
 <%}%>
