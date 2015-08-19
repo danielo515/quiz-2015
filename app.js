@@ -38,9 +38,34 @@ app.use(function(req, res, next) {
 
   // Hacer visible req.session en las vistas
   res.locals.session = req.session;
+
+  console.log(req.session.timestamp);
   next();
 });
 
+// auto logout
+app.use(function(req,res,next){
+var d = new Date(); // usamos el mismo objeto todo el tiempo por eficiencia
+
+  function setTimestam(){
+    req.session.timestamp = d.getTime();
+  }
+
+  if(!req.session.timestamp){
+    setTimestam(); // first time set timestamp
+    next();
+  } else {
+    // calculamos diferencia en mintos entre anterior timestamp y ahora
+    var diffMin = (d.getTime() - req.session.timestamp) / 1000 / 60;
+    setTimestam(); //refrescamos el timestamp al valor actual pase lo que pase
+    if (diffMin >= 1) {
+      res.redirect("/logout"); //redirigimos a logout
+    }
+    else {
+      next();
+    }
+  }
+});
 
 app.use('/', routes);
 
